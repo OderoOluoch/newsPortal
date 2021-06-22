@@ -3,13 +3,41 @@ package models;
 import java.util.Objects;
 
 public class News {
+    private String title;
+    private String content;
+    private int  authorId;
     private int id;
-    private String name;
     private int deptId;
 
-    public News(String name, int deptId){
-        this.name = name;
+    public News(String title, String content,int deptId,int authorId){
+        this.title = title;
+        this.content = content;
         this.deptId = deptId;
+        this.authorId = authorId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     public int getId() {
@@ -18,14 +46,6 @@ public class News {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getDeptId() {
@@ -41,11 +61,11 @@ public class News {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         News news = (News) o;
-        return id == news.id && deptId == news.deptId && name.equals(news.name);
+        return authorId == news.authorId && id == news.id && deptId == news.deptId && title.equals(news.title) && content.equals(news.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, deptId);
+        return Objects.hash(title, content, authorId, id, deptId);
     }
 }
