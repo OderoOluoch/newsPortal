@@ -45,14 +45,10 @@ public class App {
 
         get("/departments/:id", "application/json", (req, res) -> { //accept a request in format JSON from an app
             res.type("application/json");
-            int restaurantId = Integer.parseInt(req.params("id"));
+            int departmentId = Integer.parseInt(req.params("id"));
             res.type("application/json");
-            return gson.toJson(departmentDao.findById(restaurantId));
+            return gson.toJson(departmentDao.findById(departmentId));
         });
-
-
-
-
 
 
 
@@ -72,9 +68,9 @@ public class App {
 
         get("/users/:id", "application/json", (req, res) -> { //accept a request in format JSON from an app
             res.type("application/json");
-            int restaurantId = Integer.parseInt(req.params("id"));
+            int userId = Integer.parseInt(req.params("id"));
             res.type("application/json");
-            return gson.toJson(userDao.findById(restaurantId));
+            return gson.toJson(userDao.findById(userId));
         });
 
 
@@ -93,9 +89,9 @@ public class App {
         });
         get("/news/:id", "application/json", (req, res) -> { //accept a request in format JSON from an app
             res.type("application/json");
-            int restaurantId = Integer.parseInt(req.params("id"));
+            int newsId = Integer.parseInt(req.params("id"));
             res.type("application/json");
-            return gson.toJson(newsDao.findById(restaurantId));
+            return gson.toJson(newsDao.findById(newsId));
         });
 
     }

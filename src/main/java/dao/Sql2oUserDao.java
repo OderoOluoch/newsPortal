@@ -40,7 +40,7 @@ public class Sql2oUserDao implements UserDao{
     @Override
     public User findById(int id) {
         try (Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM restaurants WHERE id = :id")
+            return con.createQuery("SELECT * FROM users WHERE id = :id")
                     .addParameter("id", id)
                     .executeAndFetchFirst(User.class);
         }
