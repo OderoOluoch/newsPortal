@@ -1,10 +1,12 @@
 package dao;
 
 import models.Department;
+import models.News;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sql2oDepartmentDao implements DepartmentDao{
@@ -29,12 +31,24 @@ public class Sql2oDepartmentDao implements DepartmentDao{
     }
 
     @Override
+    public void addDepartmentToNews(Department department, News news) {
+
+    }
+
+    @Override
+    public List<Department> getAllDepartmentsForANews(int id) {
+        List<Department> departments = new ArrayList(); //empty list
+        return departments;
+    }
+
+    @Override
     public List<Department> getAll() {
         try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM departments")
                     .executeAndFetch(Department.class);
         }
     }
+
 
     @Override
     public void deleteById(int id) {
@@ -48,6 +62,9 @@ public class Sql2oDepartmentDao implements DepartmentDao{
         }
     }
 
+
+
+
     @Override
     public void clearAll() {
         String sql = "DELETE from departments";
@@ -57,4 +74,6 @@ public class Sql2oDepartmentDao implements DepartmentDao{
             System.out.println(ex);
         }
     }
+
+
 }
