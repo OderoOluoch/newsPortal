@@ -8,7 +8,7 @@ import models.User;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 
 public class App {
@@ -38,6 +38,16 @@ public class App {
             return gson.toJson(department);
         });
 
+        get("/departments", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            res.type("application/json");
+            return gson.toJson(departmentDao.getAll());//send it back to be displayed
+        });
+
+
+
+
+
+
 
         //End points for users
         post("/users/new", "application/json", (req, res) -> {
@@ -48,6 +58,11 @@ public class App {
             return gson.toJson(user);
         });
 
+        get("/users", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            res.type("application/json");
+            return gson.toJson(userDao.getAll());//send it back to be displayed
+        });
+
         //End points for users
         post("/news/new", "application/json", (req, res) -> {
             News news = gson.fromJson(req.body(), News.class);
@@ -55,6 +70,11 @@ public class App {
             res.status(201);
             res.type("application/json");
             return gson.toJson(news);
+        });
+
+        get("/news", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            res.type("application/json");
+            return gson.toJson(newsDao.getAll());//send it back to be displayed
         });
 
     }
