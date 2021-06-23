@@ -1,10 +1,12 @@
 package dao;
 
+import models.Department;
 import models.News;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sql2oNewsDao implements NewsDao{
@@ -29,12 +31,25 @@ public class Sql2oNewsDao implements NewsDao{
         }
     }
 
+
+
     @Override
     public List<News> getAll() {
         try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM news")
                     .executeAndFetch(News.class);
         }
+    }
+
+    @Override
+    public void addNewsToADepartment(News news, Department department) {
+
+    }
+
+    @Override
+    public List<Department> getAllDepartmentsForNews(int id) {
+        List<Department> departments= new ArrayList();
+        return departments;
     }
 
     @Override
@@ -59,4 +74,13 @@ public class Sql2oNewsDao implements NewsDao{
         }
 
     }
+
+//    @Override
+//    public List<Review> getAllReviewsByRestaurant(int restaurantId) {
+//        try (Connection con = sql2o.open()) {
+//            return con.createQuery("SELECT * FROM reviews WHERE restaurantId = :restaurantId")
+//                    .addParameter("restaurantId", restaurantId)
+//                    .executeAndFetch(Review.class);
+//        }
+//    }
 }

@@ -58,4 +58,5 @@ public class Sql2oUserDao implements UserDao{
             System.out.println(ex);
         }
     }
+
 }

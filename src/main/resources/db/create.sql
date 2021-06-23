@@ -1,4 +1,4 @@
-SET MODE PostgreSQL;
+ SET MODE PostgreSQL;
 
 CREATE TABLE IF NOT EXISTS users (
     id int PRIMARY KEY auto_increment,
@@ -17,4 +17,10 @@ CREATE TABLE IF NOT EXISTS news (
     content VARCHAR,
     deptid INTEGER,
     authorid INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS news_depatments (
+    id int PRIMARY KEY auto_increment,
+    newsid INTEGER,
+    departmentid INTEGER
 );
