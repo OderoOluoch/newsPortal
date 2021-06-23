@@ -43,6 +43,13 @@ public class App {
             return gson.toJson(departmentDao.getAll());//send it back to be displayed
         });
 
+        get("/departments/:id", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            res.type("application/json");
+            int restaurantId = Integer.parseInt(req.params("id"));
+            res.type("application/json");
+            return gson.toJson(departmentDao.findById(restaurantId));
+        });
+
 
 
 
@@ -63,6 +70,14 @@ public class App {
             return gson.toJson(userDao.getAll());//send it back to be displayed
         });
 
+        get("/users/:id", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            res.type("application/json");
+            int restaurantId = Integer.parseInt(req.params("id"));
+            res.type("application/json");
+            return gson.toJson(userDao.findById(restaurantId));
+        });
+
+
         //End points for users
         post("/news/new", "application/json", (req, res) -> {
             News news = gson.fromJson(req.body(), News.class);
@@ -75,6 +90,12 @@ public class App {
         get("/news", "application/json", (req, res) -> { //accept a request in format JSON from an app
             res.type("application/json");
             return gson.toJson(newsDao.getAll());//send it back to be displayed
+        });
+        get("/news/:id", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            res.type("application/json");
+            int restaurantId = Integer.parseInt(req.params("id"));
+            res.type("application/json");
+            return gson.toJson(newsDao.findById(restaurantId));
         });
 
     }

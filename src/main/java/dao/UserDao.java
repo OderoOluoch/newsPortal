@@ -8,6 +8,7 @@ public interface UserDao {
 
     //create
     void add(User user);
+    User findById(int id);
 
     //void addUserToADepartment(User user, Department department);
 
