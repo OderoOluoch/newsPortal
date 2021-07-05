@@ -16,7 +16,6 @@ public class Sql2oNewsDao implements NewsDao{
     }
 
 
-
     @Override
     public void add(News news) {
         String sql = "INSERT INTO news (title,content, deptid,authorid) VALUES (:title ,:content, :deptId,:authorId)"; //if you change your model, be sure to update here as well!
@@ -63,14 +62,21 @@ public class Sql2oNewsDao implements NewsDao{
 
     @Override
     public void deleteById(int id) {
-        String sql = "DELETE from news WHERE id=:id";
+
+        String sql = "DELETE from news WHERE id = :id";
+        String deleteJoin = "DELETE from news_depatments WHERE newsid = :newsid";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
-        } catch (Sql2oException ex) {
+            con.createQuery(deleteJoin)
+                    .addParameter("newsid", id)
+                    .executeUpdate();
+
+        } catch (Sql2oException ex){
             System.out.println(ex);
         }
+
     }
 
     @Override
@@ -84,12 +90,4 @@ public class Sql2oNewsDao implements NewsDao{
 
     }
 
-//    @Override
-//    public List<Review> getAllReviewsByRestaurant(int restaurantId) {
-//        try (Connection con = sql2o.open()) {
-//            return con.createQuery("SELECT * FROM reviews WHERE restaurantId = :restaurantId")
-//                    .addParameter("restaurantId", restaurantId)
-//                    .executeAndFetch(Review.class);
-//        }
-//    }
 }
