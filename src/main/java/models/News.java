@@ -16,6 +16,13 @@ public class News {
         this.authorId = authorId;
     }
 
+    public News(String title, String content,int authorId){
+        this.title = title;
+        this.content = content;
+        this.deptId = deptId;
+        this.authorId = authorId;
+    }
+
     public String getTitle() {
         return title;
     }
