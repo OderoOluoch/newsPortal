@@ -18,7 +18,7 @@ public class Sql2oNewsDao implements NewsDao{
 
     @Override
     public void add(News news) {
-        String sql = "INSERT INTO news (title,content, deptid,authorid) VALUES (:title ,:content, :deptId,:authorId)"; //if you change your model, be sure to update here as well!
+        String sql = "INSERT INTO news (title,content,authorid) VALUES (:title ,:content,:authorId)"; //if you change your model, be sure to update here as well!
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql, true)
                     .bind(news)

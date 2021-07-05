@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS news (
     id SERIAL PRIMARY KEY,
     title VARCHAR,
     content VARCHAR,
-    deptid INTEGER,
     authorid INTEGER
 );
 
