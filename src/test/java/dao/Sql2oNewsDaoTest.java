@@ -64,22 +64,22 @@ public class Sql2oNewsDaoTest {
 
 
     @Test
-    public void NewsReturnsDepartmenttCorrectly() throws Exception {
+    public void NewsReturnsDepartmentCorrectly() throws Exception {
         Department testDepartment  = new Department("Marketing");
+        Department altDepartment = new Department("Senior Management");
         departmentDao.add(testDepartment);
+        departmentDao.add(altDepartment);
 
         News testNews = setupNews();
-        News testNewsTwo = setupAltNews();
-
 
         newsDao.add(testNews);
-        newsDao.add(testNewsTwo);
+
         newsDao.addNewsToADepartment(testNews,testDepartment);
-        newsDao.addNewsToADepartment(testNewsTwo,testDepartment);
+        newsDao.addNewsToADepartment(testNews,altDepartment);
 
-        Department[] departments = {testDepartment}; //oh hi what is this? Observe how we use its assertion below.
+        Department[] departments = {testDepartment,altDepartment}; //oh hi what is this? Observe how we use its assertion below.
 
-        assertEquals(Arrays.asList(departments), newsDao.getAllDepartmentsForNews(testDepartment.getId()));
+        assertEquals(Arrays.asList(departments), newsDao.getAllDepartmentsForNews(testNews.getId()));
     }
 
     //helpers

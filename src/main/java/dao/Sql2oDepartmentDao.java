@@ -54,7 +54,7 @@ public class Sql2oDepartmentDao implements DepartmentDao{
                     .addParameter("departmentid", departmentid)
                     .executeAndFetch(Integer.class); //what is happening in the lines above?
             for (Integer newsid : allNewsIds){
-                String restaurantQuery = "SELECT * FROM newsid WHERE id = :newsid";
+                String restaurantQuery = "SELECT * FROM news WHERE id = :newsid";
                 news.add(
                         con.createQuery(restaurantQuery)
                                 .addParameter("newsid", newsid)
@@ -89,14 +89,20 @@ public class Sql2oDepartmentDao implements DepartmentDao{
 
     @Override
     public void deleteById(int id) {
-        String sql = "DELETE from departments WHERE id=:id";
+        String sql = "DELETE from departments WHERE id = :id";
+        String deleteJoin = "DELETE from news_depatments WHERE departmentid = :departmentid";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
-        } catch (Sql2oException ex) {
+            con.createQuery(deleteJoin)
+                    .addParameter("departmentid", id)
+                    .executeUpdate();
+
+        } catch (Sql2oException ex){
             System.out.println(ex);
         }
+
     }
 
 
