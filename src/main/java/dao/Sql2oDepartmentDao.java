@@ -45,8 +45,8 @@ public class Sql2oDepartmentDao implements DepartmentDao{
     }
 
     @Override
-    public List<Department> getAllDepartmentsForANews(int departmentid) {
-        List<Department> departments = new ArrayList(); //empty list
+    public List<News> getAllNewsForADepartment(int departmentid) {
+        List<News> news = new ArrayList(); //empty list
         String joinQuery = "SELECT newsid FROM news_depatments WHERE departmentid = :departmentid";
 
         try (Connection con = sql2o.open()) {
@@ -54,16 +54,16 @@ public class Sql2oDepartmentDao implements DepartmentDao{
                     .addParameter("departmentid", departmentid)
                     .executeAndFetch(Integer.class); //what is happening in the lines above?
             for (Integer newsid : allNewsIds){
-                String restaurantQuery = "SELECT * FROM restaurants WHERE id = :restaurantId";
-                departments.add(
+                String restaurantQuery = "SELECT * FROM newsid WHERE id = :newsid";
+                news.add(
                         con.createQuery(restaurantQuery)
-                                .addParameter("departmentid", departmentid)
-                                .executeAndFetchFirst(Department.class));
+                                .addParameter("newsid", newsid)
+                                .executeAndFetchFirst(News.class));
             } //why are we doing a second sql query - set?
         } catch (Sql2oException ex){
             System.out.println(ex);
         }
-        return departments;
+        return news;
     }
 
 
