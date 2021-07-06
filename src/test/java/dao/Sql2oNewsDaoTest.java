@@ -20,10 +20,10 @@ public class Sql2oNewsDaoTest {
     private static Sql2oDepartmentDao departmentDao;
     private static Sql2oUserDao userDao;
 
-    @BeforeClass //changed to @BeforeClass (run once before running any tests in this file)
+    @BeforeClass  //(run once before running any tests in this file)
     public static void setUp() throws Exception { //changed to static
-        String connectionString = "jdbc:postgresql://localhost:5432/portal_test"; //connect to postgres test database
-        Sql2o sql2o = new Sql2o(connectionString, null, null); //changed user and pass to null for mac users...Linux & windows need strings
+        String connectionString = "jdbc:postgresql://localhost:5432/portal_test";
+        Sql2o sql2o = new Sql2o(connectionString,  "moringa", "kidero");
         newsDao = new Sql2oNewsDao(sql2o);
         departmentDao = new Sql2oDepartmentDao(sql2o);
         userDao = new Sql2oUserDao(sql2o);

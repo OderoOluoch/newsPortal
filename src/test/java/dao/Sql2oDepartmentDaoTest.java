@@ -14,10 +14,10 @@ public class Sql2oDepartmentDaoTest {
         private static Sql2oDepartmentDao departmentDao;
         private static Sql2oUserDao userDao;
 
-        @BeforeClass //changed to @BeforeClass (run once before running any tests in this file)
+        @BeforeClass //(run once before running any tests in this file)
         public static void setUp() throws Exception { //changed to static
-            String connectionString = "jdbc:postgresql://localhost:5432/portal_test"; //connect to postgres test database
-            Sql2o sql2o = new Sql2o(connectionString, null, null); //changed user and pass to null for mac users...Linux & windows need strings
+            String connectionString = "jdbc:postgresql://localhost:5432/portal_test";
+            Sql2o sql2o = new Sql2o(connectionString,  "moringa", "kidero");
             newsDao = new Sql2oNewsDao(sql2o);
             departmentDao = new Sql2oDepartmentDao(sql2o);
             userDao = new Sql2oUserDao(sql2o);
@@ -25,14 +25,14 @@ public class Sql2oDepartmentDaoTest {
         }
 
         @After //run after every test
-        public void tearDown() throws Exception {  //I have changed
+        public void tearDown() throws Exception {
             System.out.println("clearing database");
             newsDao.clearAll(); //clear all restaurants after every test
             departmentDao.clearAll(); //clear all restaurants after every test
             userDao.clearAll(); //clear all restaurants after every test
         }
 
-        @AfterClass //changed to @AfterClass (run once after all tests in this file completed)
+        @AfterClass // (run once after all tests in this file completed)
         public static void shutDown() throws Exception{ //changed to static
             conn.close(); // close connection once after this entire test file is finished
             System.out.println("connection closed");
