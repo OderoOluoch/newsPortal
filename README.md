@@ -89,30 +89,30 @@ $ gradle run
 
 
  | URL end point | Description |
-        |:---        |          
+        |:---        |          ---: |
+
         |Departments|
 
-        | ``/departmets/new``        | POST | Url to create a new department  |
-         | ``/departmets``           | GET | Url to view a list of all departments  |
-          | ``/departmets/id``       | GET | Url view a single department based on id |
-           | ``/departmets/id/news`` | GET   | Url to view news items of a specifc department - ``ie General``  |
+        | ``/departmets/new``       | POST | Url to create a new department  |
+        | ``/departmets``           | GET | Url to view a list of all departments  |
+        | ``/departmets/id``        | GET | Url view a single department based on id |
+        | ``/departmets/id/news``   | GET   | Url to view news items of a specifc department - ``ie General``  |
           
         |Users|
 
         | ``/users/new``   | POST | Url to create a new user  |
-         | ``/users``      | GET  |Url to view a list of all users  |
-          | ``/users/id``  | GET  |Url view a single user based on id |
+        | ``/users``       | GET  |Url to view a list of all users  |
+        | ``/users/id``    | GET  |Url view a single user based on id |
           
 
         |News|
 
-        | ``/news/new``                         | POST | Url to create a new department  |
-         | ``/news``                            | GET  | Url to view a list of all news brifing  |
-          | ``/news/id``                        | GET  | Url view a single news briefing based on id |
-           | ``/news/id/departmets/deptid``     | POST | Url to add a news briefing to a specific department |
-            | ``/news/id/departmets``           | GET  | Url to view all the departments that are associated with a news briefing item. 
+        | ``/news/new``                        | POST | Url to create a new department  |
+        | ``/news``                            | GET  | Url to view a list of all news brifing  |
+        | ``/news/id``                         | GET  | Url view a single news briefing based on id |
+        | ``/news/id/departmets/deptid``       | POST | Url to add a news briefing to a specific department |
+        | ``/news/id/departmets``              | GET  | Url to view all the departments that are associated with a news briefing item. 
 
-            ---: |
 
 
 
