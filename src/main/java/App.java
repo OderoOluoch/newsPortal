@@ -142,14 +142,13 @@ public class App {
         });
 
         //Add a department to news.
-        post("/news/:newsId/department/:departmentId", "application/json", (req, res) -> {
+        post("/news/:newsId/departments/:departmentId", "application/json", (req, res) -> {
             int newsId = Integer.parseInt(req.params("newsId"));
             int departmentId = Integer.parseInt(req.params("departmentId"));
             News news = newsDao.findById(newsId);
             Department department = departmentDao.findById(departmentId);
 
             if (news != null && department != null){
-                //both exist and can be associated - we should probably not connect things that are not here.
                 departmentDao.addDepartmentToNews(department,news);
                 res.status(201);
                 return gson.toJson(String.format("News Briefing '%s' and department '%s' have been associated",department.getName(), news.getTitle()));
