@@ -40,6 +40,8 @@ public class Sql2oNewsDao implements NewsDao{
         }
     }
 
+
+
     @Override
     public void addNewsToADepartment(News news, Department department) {
         String sql = "INSERT INTO news_depatments (newsid, departmentid) VALUES (:newsid, :departmentid)";
@@ -63,11 +65,11 @@ public class Sql2oNewsDao implements NewsDao{
             List<Integer> allDepartmentIds = con.createQuery(joinQuery)
                     .addParameter("newsid", newsid)
                     .executeAndFetch(Integer.class);
-            for (Integer deptId : allDepartmentIds){
+            for (Integer depId : allDepartmentIds){
                 String departmentTypeQuery = "SELECT * FROM departments WHERE id = :departmentid";
                 departments.add(
                         con.createQuery(departmentTypeQuery)
-                                .addParameter("departmentid", deptId)
+                                .addParameter("departmentid", depId)
                                 .executeAndFetchFirst(Department.class));
             }
         } catch (Sql2oException ex){
