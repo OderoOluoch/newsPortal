@@ -3,7 +3,8 @@ package dao;
 import models.Department;
 import models.News;
 import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -13,22 +14,34 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 
 public class Sql2oNewsDaoTest {
-    private Connection conn;
-    private Sql2oNewsDao newsDao;
-    private Sql2oDepartmentDao departmentDao;
 
-    @Before
-    public void setUp() throws Exception {
-        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
-        Sql2o sql2o = new Sql2o(connectionString, "", "");
+    private static Connection conn; //these variables are now static.
+    private static Sql2oNewsDao newsDao;//these variables are now static.
+    private static Sql2oDepartmentDao departmentDao;
+    private static Sql2oUserDao userDao;
+
+    @BeforeClass //changed to @BeforeClass (run once before running any tests in this file)
+    public static void setUp() throws Exception { //changed to static
+        String connectionString = "jdbc:postgresql://localhost:5432/portal_test"; //connect to postgres test database
+        Sql2o sql2o = new Sql2o(connectionString, null, null); //changed user and pass to null for mac users...Linux & windows need strings
         newsDao = new Sql2oNewsDao(sql2o);
         departmentDao = new Sql2oDepartmentDao(sql2o);
-        conn = sql2o.open();
+        userDao = new Sql2oUserDao(sql2o);
+        conn = sql2o.open(); //open connection once before this test file is run
     }
 
-    @After
-    public void tearDown() throws Exception {
-        conn.close();
+    @After //run after every test
+    public void tearDown() throws Exception {  //I have changed
+        System.out.println("clearing database");
+        newsDao.clearAll(); //clear all restaurants after every test
+        departmentDao.clearAll(); //clear all restaurants after every test
+        userDao.clearAll(); //clear all restaurants after every test
+    }
+
+    @AfterClass //changed to @AfterClass (run once after all tests in this file completed)
+    public static void shutDown() throws Exception{ //changed to static
+        conn.close(); // close connection once after this entire test file is finished
+        System.out.println("connection closed");
     }
 
     @Test
