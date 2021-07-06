@@ -75,7 +75,27 @@ public class Sql2oDepartmentDaoTest {
         departmentDao.addDepartmentToNews(testDepartment,altNews);
 
 
-        assertEquals(2, departmentDao.getAllDepartmentsForANews(testDepartment.getId()).size());
+        assertEquals(2, departmentDao.getAllNewsForADepartment(testDepartment.getId()).size());
+    }
+
+
+
+    @Test
+    public void deleteingNewsAlsoUpdatesJoinTable() throws Exception {
+        Department testDepartment  = new Department("Marketing");
+        departmentDao.add(testDepartment);
+
+        News testNews = setupNews();
+        newsDao.add(testNews);
+
+        News altNews = setupAltNews();
+        newsDao.add(altNews);
+        newsDao.addNewsToADepartment(testNews,testDepartment);
+        newsDao.addNewsToADepartment(altNews,testDepartment);
+
+        newsDao.deleteById(testNews.getId());
+
+        assertEquals(0, newsDao.getAllDepartmentsForNews(testNews.getId()).size());
     }
 
 

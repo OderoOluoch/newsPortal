@@ -42,12 +42,37 @@ public class Sql2oNewsDao implements NewsDao{
 
     @Override
     public void addNewsToADepartment(News news, Department department) {
+        String sql = "INSERT INTO news_depatments (newsid, departmentid) VALUES (:newsid, :departmentid)";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("newsid", news.getId())
+                    .addParameter("departmentid", department.getId())
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
 
     }
 
     @Override
-    public List<Department> getAllDepartmentsForNews(int id) {
+    public List<Department> getAllDepartmentsForNews(int newsid) {
         List<Department> departments= new ArrayList();
+        String joinQuery = "SELECT departmentid FROM news_depatments WHERE newsid = :newsid";
+
+        try (Connection con = sql2o.open()) {
+            List<Integer> allDepartmentIds = con.createQuery(joinQuery)
+                    .addParameter("newsid", newsid)
+                    .executeAndFetch(Integer.class);
+            for (Integer deptId : allDepartmentIds){
+                String departmentTypeQuery = "SELECT * FROM departments WHERE id = :departmentid";
+                departments.add(
+                        con.createQuery(departmentTypeQuery)
+                                .addParameter("departmentid", deptId)
+                                .executeAndFetchFirst(Department.class));
+            }
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
         return departments;
     }
 
@@ -62,7 +87,6 @@ public class Sql2oNewsDao implements NewsDao{
 
     @Override
     public void deleteById(int id) {
-
         String sql = "DELETE from news WHERE id = :id";
         String deleteJoin = "DELETE from news_depatments WHERE newsid = :newsid";
         try (Connection con = sql2o.open()) {
