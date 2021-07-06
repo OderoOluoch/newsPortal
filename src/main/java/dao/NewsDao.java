@@ -10,6 +10,7 @@ public interface NewsDao {
     //create
     void add(News news);
     void addNewsToADepartment(News news, Department department);
+    News findById(int id);
 
     //read
     List<News> getAll();
@@ -22,4 +23,5 @@ public interface NewsDao {
     void deleteById(int id);
 
     void clearAll();
+
 }

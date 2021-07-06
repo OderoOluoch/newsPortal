@@ -16,10 +16,9 @@ public class Sql2oNewsDao implements NewsDao{
     }
 
 
-
     @Override
     public void add(News news) {
-        String sql = "INSERT INTO news (title,content, deptid,authorid) VALUES (:title ,:content, :deptId,:authorId)"; //if you change your model, be sure to update here as well!
+        String sql = "INSERT INTO news (title,content,authorid) VALUES (:title ,:content,:authorId)"; //if you change your model, be sure to update here as well!
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql, true)
                     .bind(news)
@@ -41,27 +40,69 @@ public class Sql2oNewsDao implements NewsDao{
         }
     }
 
+
+
     @Override
     public void addNewsToADepartment(News news, Department department) {
+        String sql = "INSERT INTO news_depatments (newsid, departmentid) VALUES (:newsid, :departmentid)";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("newsid", news.getId())
+                    .addParameter("departmentid", department.getId())
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
 
     }
 
     @Override
-    public List<Department> getAllDepartmentsForNews(int id) {
+    public List<Department> getAllDepartmentsForNews(int newsid) {
         List<Department> departments= new ArrayList();
+        String joinQuery = "SELECT departmentid FROM news_depatments WHERE newsid = :newsid";
+
+        try (Connection con = sql2o.open()) {
+            List<Integer> allDepartmentIds = con.createQuery(joinQuery)
+                    .addParameter("newsid", newsid)
+                    .executeAndFetch(Integer.class);
+            for (Integer depId : allDepartmentIds){
+                String departmentTypeQuery = "SELECT * FROM departments WHERE id = :departmentid";
+                departments.add(
+                        con.createQuery(departmentTypeQuery)
+                                .addParameter("departmentid", depId)
+                                .executeAndFetchFirst(Department.class));
+            }
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
         return departments;
     }
 
     @Override
+    public News findById(int id) {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM news WHERE id = :id")
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(News.class);
+        }
+    }
+
+    @Override
     public void deleteById(int id) {
-        String sql = "DELETE from news WHERE id=:id";
+        String sql = "DELETE from news WHERE id = :id";
+        String deleteJoin = "DELETE from news_depatments WHERE newsid = :newsid";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
-        } catch (Sql2oException ex) {
+            con.createQuery(deleteJoin)
+                    .addParameter("newsid", id)
+                    .executeUpdate();
+
+        } catch (Sql2oException ex){
             System.out.println(ex);
         }
+
     }
 
     @Override
@@ -75,12 +116,4 @@ public class Sql2oNewsDao implements NewsDao{
 
     }
 
-//    @Override
-//    public List<Review> getAllReviewsByRestaurant(int restaurantId) {
-//        try (Connection con = sql2o.open()) {
-//            return con.createQuery("SELECT * FROM reviews WHERE restaurantId = :restaurantId")
-//                    .addParameter("restaurantId", restaurantId)
-//                    .executeAndFetch(Review.class);
-//        }
-//    }
 }

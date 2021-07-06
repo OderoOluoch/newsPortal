@@ -8,11 +8,13 @@ import java.util.List;
 public interface DepartmentDao {
     //create
     void add(Department department);
+
     void addDepartmentToNews(Department department,News news);
 
     //read
     List<Department> getAll();
-    List<Department> getAllDepartmentsForANews(int id);
+    Department findById(int id);
+    List<News> getAllNewsForADepartment(int id);
 
     //update
     //omit for now
@@ -21,4 +23,6 @@ public interface DepartmentDao {
     void deleteById(int id);
 
     void clearAll();
+
+
 }
