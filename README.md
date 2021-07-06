@@ -89,7 +89,7 @@ $ gradle run
 
 
  | URL end point | Description |
-        |:---        |          ---: |
+        |:---        |          
         |Departments|
 
         | ``/departmets/new``        | POST | Url to create a new department  |
@@ -112,6 +112,7 @@ $ gradle run
            | ``/news/id/departmets/deptid``     | POST | Url to add a news briefing to a specific department |
             | ``/news/id/departmets``           | GET  | Url to view all the departments that are associated with a news briefing item. 
 
+            ---: |
 
 
 
