@@ -118,7 +118,11 @@ $ gradle run
         | ``/news/id/departmets``              | GET  | Url to view all the departments that are associated with a news briefing item. 
 
 
-* when testing with postma, Use  `https://oderoportal.herokuapp.com/` , as the base URL.  
+* when testing with postma, Use  
+  
+```https://oderoportal.herokuapp.com/```
+
+, as the base URL.  
 
 
 
